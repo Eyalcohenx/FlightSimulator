@@ -123,5 +123,8 @@
   <ItemGroup>
     <Folder Include="Views\Windows\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sponge.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

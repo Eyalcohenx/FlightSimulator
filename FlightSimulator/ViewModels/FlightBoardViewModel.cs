@@ -15,7 +15,7 @@ namespace FlightSimulator.ViewModels
         {
             get; set;
         }
-        //implement setters:
+        //implement setters via data binding:
         public double Lon
         {
             get;

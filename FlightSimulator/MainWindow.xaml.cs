@@ -22,7 +22,6 @@ namespace FlightSimulator
         public MainWindow()
         {
             InitializeComponent();
-            ResizeMode = System.Windows.ResizeMode.NoResize;
         }
     }
 }

@@ -31,4 +31,5 @@
         </d3:ChartPlotter>
         <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource LabelStyle}" HorizontalAlignment="Center">Lat</TextBlock>
     </Grid>
+    
 </UserControl>

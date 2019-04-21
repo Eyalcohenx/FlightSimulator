@@ -160,6 +160,8 @@ namespace FlightSimulator.Views
 
         }
 
+        
+
         private void Knob_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Knob.ReleaseMouseCapture();

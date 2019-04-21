@@ -134,5 +134,8 @@
                 </Canvas.Resources>
             </Canvas>
         </Canvas>
+        <Button 
+            x:Name="ManualButton" Command="{Binding ViewJoystickNow}" Content="Manual" FontSize="45" Margin="10,0,625,362.6" BorderBrush="{x:Null}" FontWeight="Bold"/>
+
     </Grid>
 </UserControl>
