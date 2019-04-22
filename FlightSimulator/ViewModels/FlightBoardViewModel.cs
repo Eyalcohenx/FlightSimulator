@@ -1,4 +1,5 @@
-﻿using FlightSimulator.Model.Interface;
+﻿using FlightSimulator.Model;
+using FlightSimulator.Model.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace FlightSimulator.ViewModels
     public class FlightBoardViewModel : BaseNotify
     {
         //to edit::
+        private ICommand _connectCommand;
+        private Connect connect;
         public ICommand ConnectCommand
         {
             get; set;

@@ -25,13 +25,10 @@ namespace FlightSimulator.Views
     /// </summary>
     public partial class FlightBoard : UserControl
     {
-        FlightBoardViewModel vm;
         ObservableDataSource<Point> planeLocations = null;
         public FlightBoard()
         {
             InitializeComponent();
-            //vm = new FlightBoardViewModel(Flig);
-            this.DataContext = vm;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -41,18 +38,17 @@ namespace FlightSimulator.Views
             planeLocations.SetXYMapping(p => p);
 
             plotter.AddLineGraph(planeLocations, 2, "Route");
-            vm.PropertyChanged += Vm_PropertyChanged;
         }
 
         private void Vm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
+            if (e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
             {
-                Point p1 = new Point(0,0);            // Fill here!
+                Point p1 = new Point(0, 0);            // Fill here!
                 planeLocations.AppendAsync(Dispatcher, p1);
             }
         }
-        /*Eyal don't touch this - use "Click={Binding ConnectCommand}" in buttons!*/
+
     }
 
 }
