@@ -41,7 +41,6 @@ namespace FlightSimulator.ViewModels
         private void OnClick()
         {
             _connect.connect();
-
         }
         #endregion
         #endregion

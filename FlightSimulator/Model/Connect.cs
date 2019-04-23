@@ -1,19 +1,28 @@
 ﻿using FlightSimulator.Model.Interface;
 using FlightSimulator.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace FlightSimulator.Model
 {
     public class Connect
     {
-      
         private ISettingsModel _apsm;
+
         #region Singleton
+
         private static Connect m_Instance = null;
+
+        //the server we created to read lon and lat
+        private TcpListener listner;
+
+        //the client we created to send the commands from
+        private Commands commands;
+        private TcpClient Info;
+
         public static Connect Instance
         {
             get
@@ -25,31 +34,53 @@ namespace FlightSimulator.Model
                 return m_Instance;
             }
         }
-        #endregion
+
+        #endregion Singleton
+
         private Connect()
         {
+            //getting the instance from the APSM
             _apsm = ApplicationSettingsModel.Instance;
+            listner = new TcpListener(_apsm.FlightInfoPort);
+            listner.Start();
+            commands = Commands.Instance;
         }
+
         public ISettingsModel getAPSM()
         {
             return _apsm;
         }
+
         public void connect()
         {
-            Console.WriteLine("print");
-            //eyal implement here
-            GetLonAndLat();
+            commands.Connect(_apsm.FlightServerIP, _apsm.FlightInfoPort);
+            //create thread to run the loop
+            ThreadStart loopref = new ThreadStart(GetLonAndLat);
+            Thread loopThread = new Thread(loopref);
+            loopThread.Start();
         }
+
         private void GetLonAndLat()
         {
-            
-              FlightBoardViewModel fvm = FlightBoardViewModel.Instance;
-            //eyal implement here - cotinouesly get lon and lat
-            //fvm.Lon = 0.5; fvm.Lat = 0.3;//delete when u work! - need to work like that with while(get info from user)
-           
-          
-           
+            FlightBoardViewModel fvm = FlightBoardViewModel.Instance;
+            Info = listner.AcceptTcpClient();                               //getting the info path
+            NetworkStream ns = Info.GetStream();                            //networkstream is used to send/receive messages
+            ns.Flush();
+            while (Info.Connected)                                          //while the client is connected, we look for incoming messages
+            {
+                byte[] msg = new byte[1024];                                //the messages arrive as byte array
+                ns.Read(msg, 0, msg.Length);                                //the same networkstream reads the message sent by the client
+                String message = Encoding.Default.GetString(msg).TrimEnd(); //now , we write the message as string
+                string[] numbers = message.Split(',');
+                double temp1, temp2;
+                if (numbers.Length > 1)
+                {
+                    if (Double.TryParse(numbers[0], out temp1))
+                        fvm.Lon = temp1;
+                    if (Double.TryParse(numbers[1], out temp2))
+                        fvm.Lat = temp2;
+                }
+            }
         }
-       
     }
 }
