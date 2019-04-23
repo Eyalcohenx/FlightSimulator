@@ -12,7 +12,6 @@ namespace FlightSimulator.ViewModels
     public class FlightBoardViewModel : BaseNotify
     {
         private double lon, lat;
-        private Connect _connect;
         #region Singleton
         private static FlightBoardViewModel m_Instance = null;
         public static FlightBoardViewModel Instance
@@ -21,33 +20,14 @@ namespace FlightSimulator.ViewModels
             {
                 if (m_Instance == null)
                 {
-                    m_Instance = new FlightBoardViewModel(Connect.Instance);
+                    m_Instance = new FlightBoardViewModel();
                     
                 }
                 return m_Instance;
             }
         }
         #endregion
-        #region Commands
-        #region ConnectCommand
-        private ICommand _connectCommand;
-        public ICommand ConnectCommand
-        {
-            get
-            {
-                return _connectCommand ?? (_connectCommand = new CommandHandler(() => OnClick()));
-            }
-        }
-        private void OnClick()
-        {
-            _connect.connect();
-        }
-        #endregion
-        #endregion
-        private FlightBoardViewModel(Connect con)
-        {
-            _connect = con;
-        }
+        
         public double Lon
         {
             get { return lon; }

@@ -25,29 +25,32 @@ namespace FlightSimulator.Views
     /// </summary>
     public partial class FlightBoard : UserControl
     {
-        private FlightBoardViewModel fvm;
+        private FlightBoardViewModel vm;
         ObservableDataSource<Point> planeLocations = null;
         public FlightBoard()
         {
             InitializeComponent();
-            fvm = FlightBoardViewModel.Instance;
-            this.DataContext = fvm;
+            vm = FlightBoardViewModel.Instance;
+            this.DataContext = vm;
+            vm.PropertyChanged += Vm_PropertyChanged;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            
             planeLocations = new ObservableDataSource<Point>();
             // Set identity mapping of point in collection to point on plot
             planeLocations.SetXYMapping(p => p);
-
+           
             plotter.AddLineGraph(planeLocations, 2, "Route");
+            
         }
 
         private void Vm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("Lat") || e.PropertyName.Equals("Lon"))
             {
-                Point p1 = new Point(fvm.Lat, fvm.Lon);
+                Point p1 = new Point(vm.Lat, vm.Lon);
                 planeLocations.AppendAsync(Dispatcher, p1);
             }
         }

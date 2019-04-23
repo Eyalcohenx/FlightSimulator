@@ -26,8 +26,8 @@ namespace FlightSimulator
         public MainWindow()
         {
             InitializeComponent();
-            FlightBoardViewModel fvm = FlightBoardViewModel.Instance;
-            this.DataContext = fvm;
+            MainWindowViewModel vm = MainWindowViewModel.Instance;
+            this.DataContext = vm;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)

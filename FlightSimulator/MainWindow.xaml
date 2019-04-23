@@ -62,7 +62,9 @@
                         </Grid.Resources>
                         <Button Grid.Row="0" Background="{StaticResource colouring}" Content="Connect" Height="20" Margin="150,5,181.4,5.4"
                                 Command="{Binding ConnectCommand}"/>
-                        <Button Grid.Row="0" Background="{StaticResource colouring}" Content="Settings" Height="20" Margin="220,5,106.4,5.4"
+                            <Button Grid.Row="0" Background="{StaticResource colouring}" Content="Disconnect" Height="20" Margin="65,5,251.4,5.4"
+                                Command="{Binding DisconnectCommand}"/>
+                            <Button Grid.Row="0" Background="{StaticResource colouring}" Content="Settings" Height="20" Margin="220,5,106.4,5.4"
                                 Click="SettingsButton_Click"/>
                             <Views:FlightBoard Grid.Row="1"/>
                     </Grid> 

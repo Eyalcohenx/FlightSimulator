@@ -39,6 +39,7 @@ namespace FlightSimulator.Model
 
         private Connect()
         {
+            
             //getting the instance from the APSM
             _apsm = ApplicationSettingsModel.Instance;
             listner = new TcpListener(_apsm.FlightInfoPort);
@@ -58,6 +59,11 @@ namespace FlightSimulator.Model
             ThreadStart loopref = new ThreadStart(GetLonAndLat);
             Thread loopThread = new Thread(loopref);
             loopThread.Start();
+        }
+        public void disconnect()
+        {
+            
+            //eyal implement here
         }
 
         private void GetLonAndLat()
