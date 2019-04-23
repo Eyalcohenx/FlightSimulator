@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FlightSimulator.Model;
+using FlightSimulator.Model.Interface;
+using FlightSimulator.ViewModels.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +13,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FlightSimulator.Views
@@ -18,11 +20,16 @@ namespace FlightSimulator.Views
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : UserControl
+    public partial class Settings : Window
     {
+        SettingsWindowViewModel vm;
         public Settings()
         {
             InitializeComponent();
+            ISettingsModel apsm = ApplicationSettingsModel.Instance;
+            vm = new SettingsWindowViewModel(apsm);
+            this.DataContext = vm;
+            vm.CloseAction = new Action(this.Close);
         }
     }
 }

@@ -10,11 +10,16 @@ namespace FlightSimulator.Model
     public class CommandHandler : ICommand
     {
         private Action _action;
+        private Action _action2;
         public CommandHandler(Action action)
         {
             _action = action;
         }
-
+        public CommandHandler(Action action,Action action2)
+        {
+            _action = action;
+            _action2 = action2;
+        }
         public bool CanExecute(object parameter)
         {
             return true;
@@ -25,6 +30,11 @@ namespace FlightSimulator.Model
         public void Execute(object parameter)
         {
             _action();
+        }
+        public void Execute2(object parameter)
+        {
+            _action();
+            _action2();
         }
     }
 }

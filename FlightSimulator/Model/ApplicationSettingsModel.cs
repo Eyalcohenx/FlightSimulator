@@ -28,6 +28,9 @@ namespace FlightSimulator.Model
             get { return Properties.Settings.Default.FlightServerIP; }
             set { Properties.Settings.Default.FlightServerIP = value; }
         }
+
+        
+
         public int FlightCommandPort
         {
             get { return Properties.Settings.Default.FlightCommandPort; }

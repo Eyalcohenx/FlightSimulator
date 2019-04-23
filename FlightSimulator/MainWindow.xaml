@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Height="700"
         Width="800"
-        Title="MainWindow" ResizeMode="NoResize">
-
-    <ScrollViewer>
+        Title="FlightSimulator" ResizeMode="NoResize">
+    <UserControl>
+        <ScrollViewer>
         <DockPanel>
             <Image Source="sponge.gif" Height="200" DockPanel.Dock="Top" Stretch="Fill"  />
             <Grid DockPanel.Dock="Bottom">
@@ -61,12 +61,14 @@
                             </LinearGradientBrush>
                         </Grid.Resources>
                         <Button Grid.Row="0" Background="{StaticResource colouring}" Content="Connect" Height="20" Margin="150,5,181.4,5.4"
-                                Click="ConnectButtonClick"/>
-                        <Button Command="{Binding ConnectCommand}" Grid.Row="0" Background="{StaticResource colouring}" Content="Settings" Height="20" Margin="220,5,106.4,5.4"/>
+                                Command="{Binding ConnectCommand}"/>
+                        <Button Grid.Row="0" Background="{StaticResource colouring}" Content="Settings" Height="20" Margin="220,5,106.4,5.4"
+                                Click="SettingsButton_Click"/>
                             <Views:FlightBoard Grid.Row="1"/>
                     </Grid> 
                 </DockPanel>
             </Grid>
         </DockPanel>
     </ScrollViewer>
+    </UserControl>
 </Window>

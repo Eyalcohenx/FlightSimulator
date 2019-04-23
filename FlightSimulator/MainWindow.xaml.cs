@@ -1,4 +1,5 @@
-﻿using FlightSimulator.ViewModels;
+﻿using FlightSimulator.Model;
+using FlightSimulator.ViewModels;
 using FlightSimulator.Views;
 using System;
 using System.Collections.Generic;
@@ -21,21 +22,18 @@ namespace FlightSimulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        Settings s;
-        FlightBoardViewModel fvm;
+    
         public MainWindow()
         {
             InitializeComponent();
-            fvm = new FlightBoardViewModel();
+            FlightBoardViewModel fvm = FlightBoardViewModel.Instance;
             this.DataContext = fvm;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            Window sw = new Window();
-            s = new Settings();
-            sw.Content = s;
-            sw.Show();
+            Settings s = new Settings();
+            s.Show();
         }
 
   

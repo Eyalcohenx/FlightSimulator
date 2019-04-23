@@ -86,9 +86,15 @@ namespace FlightSimulator.ViewModels.Windows
                 return _cancelCommand ?? (_cancelCommand = new CommandHandler(() => OnCancel()));
             }
         }
+        public Action CloseAction
+        {
+            get;
+            set;
+        }
         private void OnCancel()
         {
             model.ReloadSettings();
+            CloseAction();
         }
         #endregion
         #endregion
