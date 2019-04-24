@@ -36,6 +36,5 @@ namespace FlightSimulator
             s.Show();
         }
 
-  
     }
 }

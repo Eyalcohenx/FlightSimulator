@@ -1,4 +1,5 @@
 ﻿using FlightSimulator.Model.EventArgs;
+using FlightSimulator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,12 +107,18 @@ namespace FlightSimulator.Views
 
         private Point _startPos;
         private double _prevAileron, _prevElevator;
+        private int acounter, ecounter;
+        private JoystickViewModel vm;
         private double canvasWidth, canvasHeight;
         private readonly Storyboard centerKnob;
 
         public Joystick()
         {
             InitializeComponent();
+
+            acounter = 0;
+            ecounter = 0;
+            vm = new JoystickViewModel();
 
             Knob.MouseLeftButtonDown += Knob_MouseLeftButtonDown;
             Knob.MouseLeftButtonUp += Knob_MouseLeftButtonUp;
@@ -144,8 +151,22 @@ namespace FlightSimulator.Views
             double distance = Math.Round(Math.Sqrt(deltaPos.X * deltaPos.X + deltaPos.Y * deltaPos.Y));
             if (distance >= canvasWidth / 2 || distance >= canvasHeight / 2)
                 return;
-            Aileron = deltaPos.X;
-            Elevator = deltaPos.Y;
+            Aileron = deltaPos.X / 125;
+            if (Aileron == 0 || acounter > 20)
+            {
+                vm.propertyChanged("Aileron", Aileron);
+                if (acounter > 20)
+                    acounter = 0;
+            }
+            else { acounter++; }
+            Elevator = -1*deltaPos.Y / 125;
+            if (Elevator == 0 || ecounter > 20)
+            {
+                vm.propertyChanged("Elevator", Elevator);
+                if (ecounter > 20)
+                    ecounter = 0;
+            }
+            else { ecounter++; }
 
             knobPosition.X = deltaPos.X;
             knobPosition.Y = deltaPos.Y;

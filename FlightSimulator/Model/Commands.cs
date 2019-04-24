@@ -24,41 +24,34 @@ namespace FlightSimulator.Model
                 return m_Instance;
             }
         }
-
-        public void Connect(String FlightServerIP, int FlightInfoPort)
+        private Commands()
         {
-            client = new TcpClient(FlightServerIP, FlightInfoPort);
+            client = new TcpClient();
+        }
+
+        public void Connect(String FlightServerIP, int FlightCommandsPort)
+        {
+            client = new TcpClient(FlightServerIP, FlightCommandsPort);
+        }
+
+        public void close()
+        {
+            client.Close();
         }
 
         public void sendCommand(String Command)
         {
+            if (!client.Connected)
+                return;
+            Command = Command + "\n\r\n\r";
             // Translate the passed message into ASCII and store it as a Byte array.
             Byte[] data = System.Text.Encoding.ASCII.GetBytes(Command);
 
             // Get a client stream for reading and writing.
-            //  Stream stream = client.GetStream();
             NetworkStream stream = client.GetStream();
 
             // Send the message to the connected TcpServer. 
             stream.Write(data, 0, data.Length);
-
-            Console.WriteLine("Sent: {0}", Command);
-
-            // Receive the TcpServer.response.
-
-            // Buffer to store the response bytes.
-            data = new Byte[256];
-
-            // String to store the response ASCII representation.
-            String responseData = String.Empty;
-
-            // Read the first batch of the TcpServer response bytes.
-            Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            Console.WriteLine("Received: {0}", responseData);
-
-            // Close everything.
-            stream.Close();
         }
     }
 }

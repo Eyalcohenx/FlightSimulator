@@ -54,7 +54,7 @@ namespace FlightSimulator.Model
 
         public void connect()
         {
-            commands.Connect(_apsm.FlightServerIP, _apsm.FlightInfoPort);
+            commands.Connect(_apsm.FlightServerIP, _apsm.FlightCommandPort);
             //create thread to run the loop
             ThreadStart loopref = new ThreadStart(GetLonAndLat);
             Thread loopThread = new Thread(loopref);
@@ -62,8 +62,8 @@ namespace FlightSimulator.Model
         }
         public void disconnect()
         {
-            
-            //eyal implement here
+            listner.Stop();
+            commands.close();
         }
 
         private void GetLonAndLat()
@@ -77,14 +77,17 @@ namespace FlightSimulator.Model
                 byte[] msg = new byte[1024];                                //the messages arrive as byte array
                 ns.Read(msg, 0, msg.Length);                                //the same networkstream reads the message sent by the client
                 String message = Encoding.Default.GetString(msg).TrimEnd(); //now , we write the message as string
-                string[] numbers = message.Split(',');
-                double temp1, temp2;
-                if (numbers.Length > 1)
+                string[] lines = message.Split('\n');
+                if (lines.Length > 0)
                 {
-                    if (Double.TryParse(numbers[0], out temp1))
-                        fvm.Lon = temp1;
-                    if (Double.TryParse(numbers[1], out temp2))
-                        fvm.Lat = temp2;
+                    string[] numbers = lines[0].Split(',');
+                    if(numbers.Length == 25) { 
+                        double temp1, temp2;
+                        if (Double.TryParse(numbers[1], out temp2))
+                            fvm.Lat = Math.Round(temp2,2);
+                        if (Double.TryParse(numbers[0], out temp1))
+                            fvm.Lon = Math.Round(temp1,2);
+                    }
                 }
             }
         }

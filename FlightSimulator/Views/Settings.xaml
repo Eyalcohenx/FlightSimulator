@@ -34,7 +34,7 @@
             <TextBox Grid.Column="1" Text="{Binding FlightCommandPort}" Grid.Row="2" Margin="10.4,8.2,18.2,10.2"/>
 
             <Button Content="OK" Command="{Binding ClickCommand}"  Background="{StaticResource colouring}" Grid.ColumnSpan="2" Margin="80,16.8,183.2,57" Grid.Row="3" RenderTransformOrigin="0.688,0.131" IsDefault="True"/>
-            <Button Content="Cancel" Command="{Binding CancelCommand}"  Background="{StaticResource colouring}" Grid.Column="1" Margin="59.4,16.8,78.2,57" Grid.Row="3" RenderTransformOrigin="1.003,0.714" />
+            <Button Content="Cancel" Command="{Binding CancelCommand}"  Background="{StaticResource colouring}" Grid.Column="1" Margin="59.4,16.8,78.2,57" Grid.Row="3" RenderTransformOrigin="1.003,0.714" IsCancel="True" />
         </Grid>
 
     </UserControl>

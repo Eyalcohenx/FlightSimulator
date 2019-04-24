@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace FlightSimulator.ViewModels
 {
@@ -31,13 +32,25 @@ namespace FlightSimulator.ViewModels
         public double Lon
         {
             get { return lon; }
-            set { lon = value; NotifyPropertyChanged("Lon"); }
+            set
+            {
+                if (Math.Abs(value - lon) > 50)
+                    return;
+                    lon = value;
+                    NotifyPropertyChanged("Lon");
+            }
         }
 
         public double Lat
         {
             get { return lat; }
-            set { lat = value; NotifyPropertyChanged("Lat"); }
+            set
+            {
+                if (Math.Abs(value - lat) > 50)
+                    return;
+                lat = value;
+                NotifyPropertyChanged("Lat");
+            }
         }
     }
 }
