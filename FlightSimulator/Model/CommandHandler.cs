@@ -9,8 +9,10 @@ namespace FlightSimulator.Model
 {
     public class CommandHandler : ICommand
     {
+        //2 actions can be sent
         private Action _action;
         private Action _action2;
+
         public CommandHandler(Action action)
         {
             _action = action;

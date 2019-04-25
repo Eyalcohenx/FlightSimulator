@@ -25,7 +25,7 @@ namespace FlightSimulator.Views
         public AutoPilot()
         {
             InitializeComponent();
-            vm = AutoPilotViewModel.Instance;
+            vm = new AutoPilotViewModel();
             this.DataContext = vm;
         }
     }

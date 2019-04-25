@@ -1,92 +1,69 @@
 ﻿using FlightSimulator.Model;
-using FlightSimulator.Model.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace FlightSimulator.ViewModels
 {
-    class AutoPilotViewModel : BaseNotify
+    internal class AutoPilotViewModel : BaseNotify
     {
-        private String codetext;
-        private String oldtext;
+        private string codetext; //the text now on diplayed
+        private string oldtext;  //the text that was sent last time
         private Commands _commands;
-        #region Singleton
-        private static AutoPilotViewModel m_Instance = null;
-        public static AutoPilotViewModel Instance
+
+        public AutoPilotViewModel()
         {
-            get
-            {
-                if (m_Instance == null)
-                {
-                    m_Instance = new AutoPilotViewModel(Commands.Instance);
-                }
-                return m_Instance;
-            }
+            _commands = Commands.Instance;
+            codeText = "";
+            oldText = "";
         }
-        #endregion
+
         #region Commands
+
         #region ClickCommand
+
         private ICommand _clickCommand;
-        public ICommand ClickCommand
-        {
-            get
-            {
-                return _clickCommand ?? (_clickCommand = new CommandHandler(() => OnClick()));
-            }
-        }
+        public ICommand ClickCommand => _clickCommand ?? (_clickCommand = new CommandHandler(() => OnClick()));
+
         private void OnClick()
         {
-
             oldText = codeText;
             string[] commands = codeText.Split('\n');
-            foreach (String command in commands) {
-                _commands.sendCommand(command);
-               
-            }
-        }
-        #endregion
-        #region CancelCommand
-        private ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get
+            //sending commands one by one
+            foreach (string command in commands)
             {
-                return _cancelCommand ?? (_cancelCommand = new CommandHandler(() => OnCancel()));
+                Task.Delay(100); // waiting 100 miliseconds
+                _commands.sendCommand(command);
             }
-        }
-        private void OnCancel()
-        {
-            oldText = "";
-            codeText = "";
-        }
-        #endregion
-        #endregion
-        private AutoPilotViewModel(Commands com)
-        {
-            _commands = com;
-            codeText = "";
-            oldText = "";
         }
 
-        public String codeText
+        #endregion ClickCommand
+
+        #region CancelCommand
+
+        private ICommand _cancelCommand;
+        public ICommand CancelCommand => _cancelCommand ?? (_cancelCommand = new CommandHandler(() => OnCancel()));
+
+        private void OnCancel()
         {
-            get { return codetext; }
+            //cleans up the textbox
+            oldText = "";
+            codeText = "";
+        }
+
+        #endregion CancelCommand
+
+        #endregion Commands
+
+        public string codeText
+        {
+            get => codetext;
             set { codetext = value; NotifyPropertyChanged("codeText"); NotifyPropertyChanged("Background"); }
         }
 
-        public SolidColorBrush Background
-        {
-            get
-            {
-                return codetext.Equals(oldtext) ? Brushes.Transparent : Brushes.LightPink;
-            }
-        }
-
         public string oldText { get => oldtext; set { oldtext = value; NotifyPropertyChanged("Background"); } }
+
+        //sending the correct brush to paint the textbox
+        public SolidColorBrush Background => codetext.Equals(oldtext) ? Brushes.Transparent : Brushes.LightPink;
     }
 }

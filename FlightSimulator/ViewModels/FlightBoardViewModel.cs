@@ -34,10 +34,8 @@ namespace FlightSimulator.ViewModels
             get { return lon; }
             set
             {
-                if (Math.Abs(value - lon) > 50)
-                    return;
-                    lon = value;
-                    NotifyPropertyChanged("Lon");
+                lon = value;
+                NotifyPropertyChanged("Lon");
             }
         }
 
@@ -46,8 +44,6 @@ namespace FlightSimulator.ViewModels
             get { return lat; }
             set
             {
-                if (Math.Abs(value - lat) > 50)
-                    return;
                 lat = value;
                 NotifyPropertyChanged("Lat");
             }

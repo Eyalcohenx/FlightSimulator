@@ -107,8 +107,8 @@ namespace FlightSimulator.Views
 
         private Point _startPos;
         private double _prevAileron, _prevElevator;
-        private int acounter, ecounter;
-        private JoystickViewModel vm;
+        private int acounter, ecounter; // counters to avoid too many sends.
+        private JoystickViewModel vm;   // joystick view model.
         private double canvasWidth, canvasHeight;
         private readonly Storyboard centerKnob;
 
@@ -147,26 +147,28 @@ namespace FlightSimulator.Views
             Point newPos = e.GetPosition(Base);
 
             Point deltaPos = new Point(newPos.X - _startPos.X, newPos.Y - _startPos.Y);
-
             double distance = Math.Round(Math.Sqrt(deltaPos.X * deltaPos.X + deltaPos.Y * deltaPos.Y));
             if (distance >= canvasWidth / 2 || distance >= canvasHeight / 2)
                 return;
-            Aileron = deltaPos.X / 125;
+
+            #region Changed!
+            Aileron = deltaPos.X / 125; //normalizing
             if (Aileron == 0 || acounter > 20)
             {
-                vm.propertyChanged("Aileron", Aileron);
+                vm.propertyChanged("Aileron", Aileron); //notifying property has changed
                 if (acounter > 20)
                     acounter = 0;
             }
             else { acounter++; }
-            Elevator = -1*deltaPos.Y / 125;
+            Elevator = -1*deltaPos.Y / 125; //normalizing and reverting
             if (Elevator == 0 || ecounter > 20)
             {
-                vm.propertyChanged("Elevator", Elevator);
+                vm.propertyChanged("Elevator", Elevator); //notifying property has changed
                 if (ecounter > 20)
                     ecounter = 0;
             }
             else { ecounter++; }
+            #endregion
 
             knobPosition.X = deltaPos.X;
             knobPosition.Y = deltaPos.Y;

@@ -9,38 +9,41 @@ namespace FlightSimulator.Model
 {
     public class ApplicationSettingsModel : ISettingsModel
     {
+        //created singelton to avoid problems with the window
         #region Singleton
+
         private static ISettingsModel m_Instance = null;
+
         public static ISettingsModel Instance
         {
             get
             {
-                if(m_Instance == null)
+                if (m_Instance == null)
                 {
                     m_Instance = new ApplicationSettingsModel();
                 }
                 return m_Instance;
             }
         }
-        #endregion
+
+        #endregion Singleton
+
         public string FlightServerIP
         {
-            get { return Properties.Settings.Default.FlightServerIP; }
-            set { Properties.Settings.Default.FlightServerIP = value; }
+            get => Properties.Settings.Default.FlightServerIP;
+            set => Properties.Settings.Default.FlightServerIP = value;
         }
-
-        
 
         public int FlightCommandPort
         {
-            get { return Properties.Settings.Default.FlightCommandPort; }
-            set { Properties.Settings.Default.FlightCommandPort = value; }
+            get => Properties.Settings.Default.FlightCommandPort;
+            set => Properties.Settings.Default.FlightCommandPort = value;
         }
 
         public int FlightInfoPort
         {
-            get { return Properties.Settings.Default.FlightInfoPort; }
-            set { Properties.Settings.Default.FlightInfoPort = value; }
+            get => Properties.Settings.Default.FlightInfoPort;
+            set => Properties.Settings.Default.FlightInfoPort = value;
         }
 
         public void SaveSettings()

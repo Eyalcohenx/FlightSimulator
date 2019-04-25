@@ -16,6 +16,7 @@ namespace FlightSimulator.ViewModels
             ThrottleSliderVal = 0.0;
         }
 
+        // in the set we send the command also.
         public double RudderSliderVal
         {
             get => _rudderSliderVal;

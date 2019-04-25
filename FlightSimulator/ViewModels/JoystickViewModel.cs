@@ -14,6 +14,7 @@ namespace FlightSimulator.ViewModels
 
         public void propertyChanged(string property, double value)
         {
+            //sending the correct command. 
             if (property.Equals("Aileron"))
             {
                 _commands.sendCommand("set controls/flight/aileron " + +Math.Round(value, 2));
